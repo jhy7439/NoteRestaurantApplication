@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.WhatEatTodayActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#b5cded"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/change_interval_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:text="메뉴 이미지의 변경 간격(초) "
+            android:textColor="#ffffff" />
+
+        <EditText
+            android:id="@+id/input_gap_et"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/first_time_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#6d85dc"
+            android:text="처음으로"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/set_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_play_arrow_black_48dp"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/whatEatToday_tv"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘 뭐 먹을까?"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/time_set_tv"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시작부터 0초"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="71dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
