@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.nova.noterestaurantapplication.Broadcast.AlarmReceiver;
 import com.nova.noterestaurantapplication.R;
 import com.nova.noterestaurantapplication.Service.AlarmService;
@@ -59,6 +60,9 @@ public class TimeSettingActivity extends AppCompatActivity {
                 finish();
             }
         });
+        // lottie
+        LottieAnimationView timeLottie =findViewById(R.id.time_lottie);
+        timeLottie.playAnimation();
 
 
         // 앞서 설정한 값으로 보여주기
@@ -154,7 +158,6 @@ public class TimeSettingActivity extends AppCompatActivity {
                     //알람 시작
                     start();
 
-                    finish();
                     break;
 
                 case R.id.service_stop_btn :

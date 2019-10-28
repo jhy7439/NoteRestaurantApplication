@@ -40,6 +40,10 @@ public class AlarmService extends Service {
             // Oreo(26) 버전 이후 버전 부터는 channel 이 필요함
             String channelId = createNotificationChannel();
             //상단 알람을 클릭하면 엑티비티로 이동
+            Intent notificationIntent = new Intent(this, NoteActivity.class);
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                     new Intent(getApplicationContext(), NoteActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -48,7 +52,7 @@ public class AlarmService extends Service {
 
             //Todo : notification , setAutoCancel 적용이 안되는 문제
             notification = builder
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ic_note_black_32dp)
                     // .setCategory(Notification.CATEGORY_SERVICE)
                     .setContentTitle("맛집 노트 알림")
                     .setContentText("맛집을 작성하려면 탭하세요.")

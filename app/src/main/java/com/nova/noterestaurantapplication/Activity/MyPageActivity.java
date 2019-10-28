@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,10 +23,12 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -38,10 +41,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
+
+import noman.googleplaces.NRPlaces;
+import noman.googleplaces.Place;
+import noman.googleplaces.PlaceType;
+import noman.googleplaces.PlacesException;
+import noman.googleplaces.PlacesListener;
 import com.nova.noterestaurantapplication.Item.NoteItem;
 import com.nova.noterestaurantapplication.R;
 
@@ -54,12 +64,16 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import noman.googleplaces.PlacesListener;
+
 //광고 스레드 (Handler 사용) : NoteActivity 리사이클러뷰 아이템의 정보를 가져와서 보여준다
 public class MyPageActivity extends AppCompatActivity
-        implements View.OnClickListener, OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
+        implements View.OnClickListener, OnMapReadyCallback,
+        ActivityCompat.OnRequestPermissionsResultCallback, PlacesListener {
 
 
     //tvTitle: 작업 스레드의 제목을 출력할 텍스트뷰
@@ -79,8 +93,11 @@ public class MyPageActivity extends AppCompatActivity
     //스레드 내부의 while문을 제어할 flag
     boolean flag;
 
+    //내 주변 맛집의 마커를 담는 리스트
+    List<Marker> previous_marker = null;
 
     private GoogleMap googleMapObj;
+    //내 현재 위치 마커
     private Marker currentMarker = null;
 
     private static final String TAG = "googlemap_example";
@@ -121,12 +138,15 @@ public class MyPageActivity extends AppCompatActivity
         tvHomeButton.setOnClickListener(this);
         tvNoteButton.setOnClickListener(this);
         tvTimerSetting.setOnClickListener(this);
+        //로딩 lottie
+        LottieAnimationView lottie =findViewById(R.id.animation_lottie);
+        lottie.playAnimation();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         layoutView = findViewById(R.id.my_page_layout);
-
+//네비케이션에 유용(현재 내위치 실시간으로 화면 중앙에 배치)
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(UPDATE_INTERVAL_MS)
@@ -142,6 +162,20 @@ public class MyPageActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(MyPageActivity.this);
+
+
+        //버튼 클릭시 지도에 음식점 표시
+        previous_marker = new ArrayList<Marker>();
+
+        Button btnFindRestaurant = (Button)findViewById(R.id.find_restaurant_btn);
+        btnFindRestaurant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPlaceInformation(currentPosition);
+            }
+        });
+
+
 
 
         //총 작업 개수
@@ -352,10 +386,7 @@ public class MyPageActivity extends AppCompatActivity
 
                 mCurrentLocatiion = location;
             }
-
-
         }
-
     };
 
 
@@ -391,9 +422,7 @@ public class MyPageActivity extends AppCompatActivity
                 googleMapObj.setMyLocationEnabled(true);
 
         }
-
     }
-
 
     @Override
     protected void onStart() {
@@ -410,8 +439,6 @@ public class MyPageActivity extends AppCompatActivity
                 googleMapObj.setMyLocationEnabled(true);
 
         }
-
-
     }
 
 
@@ -660,6 +687,72 @@ public class MyPageActivity extends AppCompatActivity
 
                 break;
         }
+    }
+
+    @Override
+    public void onPlacesFailure(PlacesException e) {
+
+    }
+
+    @Override
+    public void onPlacesStart() {
+
+    }
+
+    @Override
+    public void onPlacesSuccess(final List<Place> places) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (noman.googleplaces.Place place : places) {
+
+                    LatLng latLng
+                            = new LatLng(place.getLatitude()
+                            , place.getLongitude());
+
+                    String markerSnippet = getCurrentAddress(latLng);
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(latLng);
+                    markerOptions.title(place.getName());
+                    markerOptions.snippet(markerSnippet);
+                    Marker item = googleMapObj.addMarker(markerOptions);
+                    previous_marker.add(item);
+
+                }
+
+                //중복 마커 제거
+                HashSet<Marker> hashSet = new HashSet<Marker>();
+                hashSet.addAll(previous_marker);
+                previous_marker.clear();
+                previous_marker.addAll(hashSet);
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onPlacesFinished() {
+
+    }
+
+    public void showPlaceInformation(LatLng location)
+    {
+        googleMapObj.clear();//지도 클리어
+
+        if (previous_marker != null)
+            previous_marker.clear();//지역정보 마커 클리어
+
+        new NRPlaces.Builder()
+                .listener(MyPageActivity.this)
+                .key("AIzaSyBaPuBPF4OYOXLgN_u93SvxWYJ2tZvEEOY")
+                .latlng(location.latitude, location.longitude)//현재 위치
+                .radius(300) //300 미터 내에서 검색
+                .type(PlaceType.RESTAURANT) //음식점
+                .build()
+                .execute();
     }
 
 }

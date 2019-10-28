@@ -17,16 +17,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/note_search_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginRight="12dp"
-        app:layout_constraintRight_toLeftOf="@+id/note_addPost_iv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_search_black_32dp"
-        tools:ignore="VectorDrawableCompat" />
+<!--    <ImageView-->
+<!--        android:id="@+id/note_search_iv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:layout_marginRight="12dp"-->
+<!--        app:layout_constraintRight_toLeftOf="@+id/note_addPost_iv"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_search_black_32dp"-->
+<!--        tools:ignore="VectorDrawableCompat" />-->
 
     <ImageView
         android:id="@+id/note_addPost_iv"

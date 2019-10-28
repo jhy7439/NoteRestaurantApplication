@@ -138,7 +138,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         //맛집 작성 포스트 추가 버튼 참조
         iv_addPost = findViewById(R.id.note_addPost_iv);
         //노트 화면 리사이클러뷰 아이템 검색 버튼 참조
-        iv_search = findViewById(R.id.note_search_iv);
+       // iv_search = findViewById(R.id.note_search_iv);
         noteRecyclerView = findViewById(R.id.note_recyclerview);
 
     }

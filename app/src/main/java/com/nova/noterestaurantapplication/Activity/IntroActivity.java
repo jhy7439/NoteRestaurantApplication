@@ -35,8 +35,8 @@ public class IntroActivity extends AppCompatActivity {
 
         //스레드 슬립 동안 작동하는 lottie 애니메이션
        //로딩 lottie
-        LottieAnimationView lodingLottie =findViewById(R.id.animation_view);
-        lodingLottie.playAnimation();
+        LottieAnimationView lordingLottie =findViewById(R.id.animation_view);
+        lordingLottie.playAnimation();
 
         //스레드 생성
         new introTask().execute();

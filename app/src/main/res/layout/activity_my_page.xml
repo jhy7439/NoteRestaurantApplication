@@ -115,7 +115,6 @@
         app:layout_constraintLeft_toRightOf="@id/text"
         app:layout_constraintTop_toBottomOf="@+id/photo_guideLine"
         app:layout_constraintBottom_toTopOf="@id/list_guideLine"
-        android:layout_marginLeft="16dp"
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -132,10 +131,10 @@
         android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@+id/vertical_guideLine"
+        app:layout_constraintLeft_toLeftOf="@+id/total_writing_tv"
         app:layout_constraintTop_toBottomOf="@+id/photo_guideLine"
         app:layout_constraintBottom_toTopOf="@id/list_guideLine"
-        android:layout_marginLeft="16dp" />
+        android:layout_marginLeft="24dp" />
     <TextView
         android:id="@+id/bookmark_writing_tv"
         android:text=""
@@ -146,6 +145,38 @@
         app:layout_constraintTop_toBottomOf="@+id/photo_guideLine"
         app:layout_constraintBottom_toTopOf="@id/list_guideLine"
         android:layout_marginLeft="16dp" />
+
+
+    <Button
+        android:id="@+id/find_restaurant_btn"
+        android:text="내주변 맛집 검색"
+        android:textSize="12sp"
+        android:textColor="#ffffff"
+        android:background="#3366FF"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo_guideLine"
+        app:layout_constraintBottom_toTopOf="@id/list_guideLine"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_lottie"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="10689-searching.json"
+        app:lottie_loop="true"
+        android:layout_marginRight="4dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintRight_toLeftOf="@id/find_restaurant_btn"
+        app:layout_constraintTop_toBottomOf="@+id/photo_guideLine"
+        app:layout_constraintBottom_toTopOf="@id/list_guideLine"
+
+      />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/list_guideLine"
@@ -166,6 +197,18 @@
         tools:context = ".MyPageActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         />
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/find_restaurant_btn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:clickable="true"-->
+<!--        android:src="@drawable/ic_add_black_32dp"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/map_fragment"-->
+
+<!--        />-->
 
     <View
         android:id="@+id/bottom_view"
