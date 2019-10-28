@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.nova.noterestaurantapplication.R;
 
 //맛집노트 어플임을 사용자에게 알려주는 엑티비티
@@ -31,6 +32,11 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
         //로딩 이미지 참조
         setImageResource = findViewById(R.id.intro);
+
+        //스레드 슬립 동안 작동하는 lottie 애니메이션
+       //로딩 lottie
+        LottieAnimationView lodingLottie =findViewById(R.id.animation_view);
+        lodingLottie.playAnimation();
 
         //스레드 생성
         new introTask().execute();

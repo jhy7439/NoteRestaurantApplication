@@ -119,7 +119,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 //          SharedPreferences.Editor jsonEditor1 = sharedPreferences1.edit();
 //          jsonEditor1.clear();
 //          jsonEditor1.commit();
-          //참조
+          //findview: 레이아웃 xml 과 자바 코드 연결
           init();
           //맛집 작성 데이터 인텐트로 전달
           savePost();
@@ -190,7 +190,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        //리콜버튼을 누르면 불러오기 기능
+        //리콜버튼을 누르면 작성한 데이터 불러오기 기능
           //onCreat에서 불러오기
           //쉐어드에 저장한 값이 있으면 불러오고 없으면 토스트메세지로 불러올 값이 없다고 띄운다
         tvRecall.setOnClickListener(new View.OnClickListener() {
@@ -262,7 +262,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
               }
           });
           Log.d("쉐어드", "WriteActivity"+ ": onCreate" + ": 메소드 흐름 6");
-
     }
 
 
@@ -578,6 +577,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         Log.d("생명주기", "WriteActivity" + ": onResume");
+
 
         //쉐어드에 저장한 데이터를 WriteActivity가 새로 만들어질 때 마다 불러오기 위해서 조건문 사용
 //        SharedPreferences sharedDataPost = getSharedPreferences(PREFS_POST , MODE_PRIVATE);
